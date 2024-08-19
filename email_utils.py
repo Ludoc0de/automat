@@ -4,9 +4,6 @@ from email.mime.text import MIMEText
 
 # Définir la fonction pour envoyer un email
 def send_email(subject, body, sender_email, receiver_email, password_email):
-    # sender_email = SENDER_EMAIL
-    # receiver_email =  RECEIVER_EMAIL
-    # password_email = PASSWORD_EMAIL
 
     # Create the email
     msg = MIMEMultipart()
