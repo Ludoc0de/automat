@@ -73,11 +73,11 @@ def send_daily_report():
 
 
 # Planifier la fonction job pour un envoi tous les jours à 16:00.
-schedule.every().monday.at("18:30").do(send_daily_report)
-schedule.every().tuesday.at("18:30").do(send_daily_report)
-schedule.every().wednesday.at("18:30").do(send_daily_report)
-schedule.every().thursday.at("18:30").do(send_daily_report)
-schedule.every().friday.at("18:30").do(send_daily_report)
+schedule.every().monday.at("07:00").do(send_daily_report)
+schedule.every().tuesday.at("07:00").do(send_daily_report)
+schedule.every().wednesday.at("07:00").do(send_daily_report)
+schedule.every().thursday.at("07:00").do(send_daily_report)
+schedule.every().friday.at("07:00").do(send_daily_report)
 
 # Keep the script running
 while True:
