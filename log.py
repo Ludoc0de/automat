@@ -1,15 +1,26 @@
+import os
 import requests
-import config
 from bs4 import BeautifulSoup
+from dotenv import load_dotenv
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-# Define the function to send an email
+# Charger les variables d'environnement
+load_dotenv()
+
+# Obtenir les variables d'environnement
+USERNAME = os.getenv('EMAIL')
+PASSWORD = os.getenv('PASSWORD')
+RECEIVER_EMAIL = os.getenv('RECEIVER_EMAIL')
+SENDER_EMAIL = os.getenv('SENDER_EMAIL')
+PASSWORD_EMAIL = os.getenv('PASSWORD_EMAIL')
+
+# Définir la fonction pour envoyer un email
 def send_email(subject, body):
-    sender_email = config.sender_email  
-    receiver_email =  config.receiver_email  
-    password_email = config.password_email
+    sender_email = SENDER_EMAIL
+    receiver_email =  RECEIVER_EMAIL
+    password_email = PASSWORD_EMAIL
 
     # Create the email
     msg = MIMEMultipart()
