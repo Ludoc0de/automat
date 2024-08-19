@@ -71,7 +71,14 @@ payload = {
 
 login_response = session.post(login_url, data=payload, headers=headers)
 # Vérifier si responses ok
-print(login_response)
+if login_response.status_code == 200:
+    login_message = "Response 200, réponse ok"
+
+else:
+    login_message = "Error in response:", login_response.status_code
+
+print(login_message)
+
 
 dashboard_response = session.get(dashboard_url)
 print(dashboard_response.text[:5000])
@@ -86,7 +93,7 @@ print(result_message)
 
 # Preparartion du contenu de l'email
 email_subject = "Login Status Report"
-email_body = f"Login Response:\n\n{login_response.text[:1000]}\n\n{result_message}"
+email_body = f"Login Response:\n\n{login_response.text[:1000]}\n\n{login_message}\n\n{result_message}"
 
 # ERnvois de l'email
 send_email(email_subject, email_body)
