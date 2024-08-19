@@ -27,7 +27,8 @@ payload = {
 }
 
 login_response = session.post(login_url, data=payload, headers=headers)
-# print(login_response.text)
+# Vérifier si responses ok
+print(login_response)
 
 dashboard_response = session.get(dashboard_url)
 print(dashboard_response.text[:5000])
