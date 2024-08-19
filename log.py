@@ -49,7 +49,7 @@ def send_daily_report():
         login_message = "Response 200, réponse ok"
 
     else:
-        login_message = "Error in response:", login_response.status_code
+        login_message = f"Error in response: {login_response.status_code}"
 
     print(login_message)
 
@@ -72,8 +72,12 @@ def send_daily_report():
     send_email(email_subject, email_body, SENDER_EMAIL, RECEIVER_EMAIL, PASSWORD_EMAIL)
 
 
-# Schedule the job to run every day at 8 AM
-schedule.every().day.at("16:00").do(send_daily_report)
+# Planifier la fonction job pour un envoi tous les jours à 16:00.
+schedule.every().monday.at("18:30").do(send_daily_report)
+schedule.every().tuesday.at("18:30").do(send_daily_report)
+schedule.every().wednesday.at("18:30").do(send_daily_report)
+schedule.every().thursday.at("18:30").do(send_daily_report)
+schedule.every().friday.at("18:30").do(send_daily_report)
 
 # Keep the script running
 while True:
