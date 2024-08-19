@@ -1,7 +1,39 @@
 import requests
 import config
 from bs4 import BeautifulSoup
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
+# Define the function to send an email
+def send_email(subject, body):
+    sender_email = config.sender_email  
+    receiver_email =  config.receiver_email  
+    password_email = config.password_email
+
+    # Create the email
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = receiver_email
+    msg['Subject'] = subject
+
+    # Attach the email body
+    msg.attach(MIMEText(body, 'plain'))
+
+    # Send the email via SMTP
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(sender_email,password_email)
+        text = msg.as_string()
+        server.sendmail(sender_email, receiver_email, text)
+        print("Email sent successfully")
+    except Exception as e:
+        print(f"Failed to send email: {e}")
+    finally:
+        server.quit()
+
+# Main script for logging in and checking dashboard
 login_url = ("https://frontendmasters.com/login/")
 dashboard_url = ("https://frontendmasters.com/dashboard/")
 
