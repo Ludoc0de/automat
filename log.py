@@ -1,10 +1,12 @@
 import requests
+import config
 from bs4 import BeautifulSoup
 
 login_url = ("https://frontendmasters.com/login/")
+dashboard_url = ("https://frontendmasters.com/dashboard/")
 
 # # Création d'une session pour conserver les cookies
-session = requests.Session()
+session = requests.session()
 
 # # Obtenir la page de connexion pour récupérer les cookies et éventuellement des tokens CSRF
 response = session.get(login_url)
@@ -19,26 +21,19 @@ headers = {
 }
 
 payload = {
-    "email": "config.EMAIL",
-    "password": "config.PASSWORD"
+    "username": config.USERNAME,
+    "password": config.PASSWORD,
+    # "csrfmiddlewaretoken": csrf_token
 }
 
 login_response = session.post(login_url, data=payload, headers=headers)
 # print(login_response.text)
 
-dashboard_url = ("https://frontendmasters.com/dashboard/")
 dashboard_response = session.get(dashboard_url)
-print("dashboard")
-print(dashboard_response.text)
+print(dashboard_response.text[:5000])
 
-# # Vérifier si un cookie spécifique est présent après la connexion
-# if "sessionid" in session.cookies:
-#     print("Connexion réussie, session active")
-# else:
-#     print("Échec de la connexion, aucun cookie de session trouvé")
-
-# # Vérifier si vous êtes redirigé vers la page de connexion ou si le tableau de bord est affiché
-# if "Log out" in dashboard_response.text or "Tableau de bord" in dashboard_response.text:
-#     print("Connexion réussie, accès au tableau de bord")
-# else:
-#     print("Échec de la connexion, redirection vers la page de connexion")
+# Vérifier si vous êtes redirigé vers la page de connexion ou si le tableau de bord est affiché
+if "Logout" in dashboard_response.text or "My Home" in dashboard_response.text:
+    print("Connexion réussie, accès au tableau de bord")
+else:
+    print("Échec de la connexion, redirection vers la page de connexion")
