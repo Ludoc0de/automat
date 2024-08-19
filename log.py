@@ -10,7 +10,7 @@ from email.mime.text import MIMEText
 load_dotenv()
 
 # Obtenir les variables d'environnement
-USERNAME = os.getenv('EMAIL')
+USERNAME = os.getenv('RECEIVER_EMAIL')
 PASSWORD = os.getenv('PASSWORD')
 RECEIVER_EMAIL = os.getenv('RECEIVER_EMAIL')
 SENDER_EMAIL = os.getenv('SENDER_EMAIL')
@@ -64,8 +64,8 @@ headers = {
 }
 
 payload = {
-    "username": config.USERNAME,
-    "password": config.PASSWORD,
+    "username": USERNAME,
+    "password": PASSWORD,
     # "csrfmiddlewaretoken": csrf_token
 }
 
@@ -78,6 +78,15 @@ print(dashboard_response.text[:5000])
 
 # Vérifier si vous êtes redirigé vers la page de connexion ou si le tableau de bord est affiché
 if "Logout" in dashboard_response.text or "My Home" in dashboard_response.text:
-    print("Connexion réussie, accès au tableau de bord")
+    result_message  = "Connexion réussie, accès au tableau de bord"
 else:
-    print("Échec de la connexion, redirection vers la page de connexion")
+    result_message  = "Échec de la connexion, redirection vers la page de connexion"
+
+print(result_message)
+
+# Preparartion du contenu de l'email
+email_subject = "Login Status Report"
+email_body = f"Login Response:\n\n{login_response.text[:1000]}\n\n{result_message}"
+
+# ERnvois de l'email
+send_email(email_subject, email_body)
