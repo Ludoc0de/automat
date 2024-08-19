@@ -2,9 +2,10 @@ import os
 import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+from email_utils import send_email
+# import smtplib
+# from email.mime.multipart import MIMEMultipart
+# from email.mime.text import MIMEText
 
 # Charger les variables d'environnement
 load_dotenv()
@@ -17,34 +18,34 @@ SENDER_EMAIL = os.getenv('SENDER_EMAIL')
 PASSWORD_EMAIL = os.getenv('PASSWORD_EMAIL')
 
 # Définir la fonction pour envoyer un email
-def send_email(subject, body):
-    sender_email = SENDER_EMAIL
-    receiver_email =  RECEIVER_EMAIL
-    password_email = PASSWORD_EMAIL
+# def send_email(subject, body):
+#     sender_email = SENDER_EMAIL
+#     receiver_email =  RECEIVER_EMAIL
+#     password_email = PASSWORD_EMAIL
 
-    # Create the email
-    msg = MIMEMultipart()
-    msg['From'] = sender_email
-    msg['To'] = receiver_email
-    msg['Subject'] = subject
+#     # Create the email
+#     msg = MIMEMultipart()
+#     msg['From'] = sender_email
+#     msg['To'] = receiver_email
+#     msg['Subject'] = subject
 
-    # Attach the email body
-    msg.attach(MIMEText(body, 'plain'))
+#     # Attach the email body
+#     msg.attach(MIMEText(body, 'plain'))
 
-    # Send the email via SMTP
-    try:
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()
-        server.login(sender_email,password_email)
-        text = msg.as_string()
-        server.sendmail(sender_email, receiver_email, text)
-        print("Email sent successfully")
-    except Exception as e:
-        print(f"Failed to send email: {e}")
-    finally:
-        server.quit()
+#     # Send the email via SMTP
+#     try:
+#         server = smtplib.SMTP('smtp.gmail.com', 587)
+#         server.starttls()
+#         server.login(sender_email,password_email)
+#         text = msg.as_string()
+#         server.sendmail(sender_email, receiver_email, text)
+#         print("Email sent successfully")
+#     except Exception as e:
+#         print(f"Failed to send email: {e}")
+#     finally:
+#         server.quit()
 
-# Main script for logging in and checking dashboard
+# Script proncipal pour se logger and accéder au tableau de bord
 login_url = ("https://frontendmasters.com/login/")
 dashboard_url = ("https://frontendmasters.com/dashboard/")
 
@@ -95,5 +96,5 @@ print(result_message)
 email_subject = "Login Status Report"
 email_body = f"Login Response:\n\n{login_response.text[:1000]}\n\n{login_message}\n\n{result_message}"
 
-# ERnvois de l'email
-send_email(email_subject, email_body)
+# Envois de l'email
+send_email(email_subject, email_body, SENDER_EMAIL, RECEIVER_EMAIL, PASSWORD_EMAIL)
