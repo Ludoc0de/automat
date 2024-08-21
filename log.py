@@ -66,7 +66,7 @@ def send_daily_report():
 
     # Preparartion du contenu de l'email
     email_subject = "Login Status Report"
-    email_body = f"Login Response:\n\n{login_response.text[:1000]}\n\n{login_message}\n\n{result_message}"
+    email_body = f"Login Login status response:\n\n{login_message}\n\n{result_message}"
 
     # Envois de l'email
     send_email(email_subject, email_body, SENDER_EMAIL, RECEIVER_EMAIL, PASSWORD_EMAIL)
